@@ -30,7 +30,7 @@ const routes = [
             next({ path: '/login' })
           }
       }},
-      {path: '/HomeUserInfo/:uid', name: 'homeUserInfo', component: HomeUserInfo},
+      {path: '/HomeUserInfo', name: 'homeUserInfo', component: HomeUserInfo},
       {path: '/article/:id', name: 'article', component: Article},//分享内容详情页
       {path: '/addmsg', name: 'addMsg', component: AddMsg},//新增分享
       {path: '/search/:types', name: 'searchresult', component: SearchResult},//搜索分享内容

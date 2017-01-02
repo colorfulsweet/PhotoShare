@@ -1,9 +1,9 @@
 <template>
   <div class="com-home">
     <div class="user-info clearfix">
-      <router-link to="/homeUserInfo/123" class="link-box clearfix">
+      <router-link :to="{name:'homeUserInfo'}" class="link-box clearfix">
         <img :src="baseUrl + memberAvatar">
-        <p>{{memberName}}</p>
+        <p>{{username}}</p>
         <span class="iconfont icon-xiangyoujiantou icon-right"></span>
       </router-link>
     </div>
@@ -57,17 +57,17 @@
       return {
         id: 1,
         memberAvatar:'',
-        memberName:'',
+        username:'',
         role: '',
         baseUrl: this.$store.state.comm.fileUrl+"image/",
         isAdmin: false
       }
     },
     created: function () {
-      let userMsg = localStorage.getItem('userMsg')
-      this.role = JSON.parse(userMsg).memberRole
-      this.memberAvatar = JSON.parse(userMsg).memberAvatar
-      this.memberName = JSON.parse(userMsg).memberName
+      let userMsg = JSON.parse(localStorage.getItem('userMsg'));
+      this.role = userMsg.memberRole
+      this.memberAvatar = userMsg.memberAvatar
+      this.username = userMsg.username
       if(this.role === 3){
         this.isAdmin = true
       }

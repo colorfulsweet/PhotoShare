@@ -59,10 +59,10 @@ const store = new Vuex.Store({
       Object.assign(state.comm.indexConf, data)
     },
     isLogin: (state,data) => {
-      localStorage.setItem('memberId',data.memberId)
-      localStorage.setItem('userMsg',JSON.stringify(data))
-      state.comm.login.memberId = localStorage.getItem('memberId')
-      state.comm.login.userData = JSON.parse(localStorage.getItem('userMsg'))
+      localStorage.setItem('memberId',data.memberId);
+      localStorage.setItem('userMsg',JSON.stringify(data));
+      state.comm.login.memberId = data.memberId;
+      state.comm.login.userData = data;
     },
     logout: (state,data) => {
       localStorage.removeItem('memberId')

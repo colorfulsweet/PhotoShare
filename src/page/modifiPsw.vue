@@ -1,17 +1,18 @@
+<!-- 修改密码页面 -->
 <template>
   <div class="login">
     <form role="form" class="form-horizontal" name="RegisterForm">
       <ul class="formarea">
         <li>
-          <label class="lit">密码：</label>
-          <input type="password" placeholder="修改前密码" class="textbox" required v-model="psw"/>
+          <label class="lit">旧密码：</label>
+          <input type="password" placeholder="修改前密码" class="textbox" required v-model="pwd"/>
         </li>
         <li>
-          <label class="lit">密码：</label>
-          <input type="password" placeholder="修改后密码" class="textbox" required v-model="newpsw"/>
+          <label class="lit">新密码：</label>
+          <input type="password" placeholder="修改后密码" class="textbox" required v-model="newpwd"/>
         </li>
         <li>
-          <input type="button" @click="loginAction" value="确认修改" class="button"/>
+          <input type="button" @click="submitUpdate" value="确认修改" class="button"/>
         </li>
       </ul>
     </form>
@@ -23,6 +24,12 @@
   import router from '../router/router'
 
   export default{
+    data : function(){
+      return{
+        pwd : null,
+        newpwd : null
+      };
+    },
     created () {
       this.$store.commit('changeIndexConf', {
         isFooter: false,
@@ -33,30 +40,22 @@
       })
     },
     methods: {
-      loginAction: function () {
-        let url = 'http://www.sherlochao.com:9091/photosharing/memberapi/updatePassword'
-        let memberId = localStorage.getItem('memberId')
-
-        var xhr = new XMLHttpRequest()
-        xhr.open("POST", url, true)
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-          var XMLHttpReq = xhr;
-          if (XMLHttpReq.readyState == 4) {
-            if (XMLHttpReq.status == 200) {
-              var text = XMLHttpReq.responseText
-              var res = JSON.parse(text)
-              console.log(res)
-              if(res.result === 1){
-                alert('修改成功！')
-                router.push('index')
-              }else{
-                alert(res.msg)
-              }
-            }
-          }
+      submitUpdate: function () {
+        let url = this.$store.state.comm.apiUrl + 'user/updatePassword'
+        let params = {
+          memberId : localStorage.getItem('memberId'),
+          pwd : this.pwd,//旧密码
+          newpwd : this.newpwd//新密码
         }
-        xhr.send('password=' + this.psw + '&newPasswd=' + parseInt(this.newpsw) + '&memberId=' + memberId)
+        this.$http.post(url,params).then(function(res){
+          var resData = JSON.parse(res.bodyText);
+          if(resData.status) {
+            alert("修改成功");
+            router.push("/home");
+          }
+        }).catch(function(err){
+          console.error(err);
+        })
       }
     }
   }

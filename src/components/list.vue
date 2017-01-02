@@ -3,11 +3,11 @@
     <ul>
       <li class="list-li" v-for="value in doList">
         <div class="user">
-          <a :href="route + value.memberId">
-          <img :src="imageUrl + value.memberIcon" alt=""/>
+          <a :href="route + value.user.id">
+          <img :src="imageUrl + value.user.memberIcon" alt=""/>
           </a>
           <div class="name">
-            <p>{{value.memberNickname}}</p>
+            <p>{{value.user.memberNickname}}</p>
             <p class="createtime"  v-if="value.sharedCreatetime">{{value.sharedCreatetime}}</p>
           </div>
           <router-link :to="{  name: 'article', params: { id: value.id }}" class="btn-d btn-s"  v-if="value.photos">详情</router-link>

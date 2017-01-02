@@ -1,9 +1,9 @@
 <template>
   <div class="footer">
     <div>
-      <router-link to="/index"><span class="icon-shouye iconfont "></span>
+      <router-link :to="{name:'index'}"><span class="icon-shouye iconfont "></span>
         <p>首页</p></router-link>
-      <router-link to="/home"><span class="icon-myline iconfont "></span>
+      <router-link :to="{name:'home'}"><span class="icon-myline iconfont "></span>
         <p>个人</p></router-link>
     </div>
   </div>
