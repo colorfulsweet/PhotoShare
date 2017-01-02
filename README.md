@@ -8,7 +8,7 @@
 
 ## vue-cli构建工具必知
 
-我选用的vue-cli 是基于webpack的版本 ，不了解webpack的可以先粗略看下下面的基本知识
+我选用的vue-cli 是基于webpack的版本
 
 
 webpack 基本知识点：
