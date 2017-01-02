@@ -52,7 +52,7 @@
           username : this.name,
           password : this.pwd
         }
-        this.$http.post(url,params).then(function(res){
+        this.$http.post(url,{params}).then(function(res){
           var resData = JSON.parse(res.bodyText);
           if(resData.status) {
             vm.$store.commit('isLogin', resData.data)

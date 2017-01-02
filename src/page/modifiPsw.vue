@@ -47,7 +47,7 @@
           pwd : this.pwd,//旧密码
           newpwd : this.newpwd//新密码
         }
-        this.$http.post(url,params).then(function(res){
+        this.$http.post(url,{params}).then(function(res){
           var resData = JSON.parse(res.bodyText);
           if(resData.status) {
             alert("修改成功");

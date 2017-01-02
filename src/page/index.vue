@@ -46,7 +46,7 @@
       }
       let vm = this;
       /*获取最新列表信息*/
-      this.$http.get(url,params).then(function(res){
+      this.$http.get(url,{params}).then(function(res){
         vm.resData = JSON.parse(res.bodyText);
         vm.$store.commit('isLoading', false);//隐藏"加载中"的提示
       }).catch(function(err){

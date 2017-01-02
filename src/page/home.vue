@@ -2,7 +2,7 @@
   <div class="com-home">
     <div class="user-info clearfix">
       <router-link :to="{name:'homeUserInfo'}" class="link-box clearfix">
-        <img :src="baseUrl + memberAvatar">
+        <img :src="baseUrl + memberIcon">
         <p>{{username}}</p>
         <span class="iconfont icon-xiangyoujiantou icon-right"></span>
       </router-link>
@@ -55,19 +55,18 @@
   export default{
     data: function () {
       return {
-        id: 1,
-        memberAvatar:'',
-        username:'',
-        role: '',
+        memberIcon:null,
+        username:null,
+        role: null,
         baseUrl: this.$store.state.comm.fileUrl+"image/",
         isAdmin: false
       }
     },
     created: function () {
       let userMsg = JSON.parse(localStorage.getItem('userMsg'));
-      this.role = userMsg.memberRole
-      this.memberAvatar = userMsg.memberAvatar
-      this.username = userMsg.username
+      this.role = userMsg.memberRole;
+      this.memberIcon = userMsg.memberIcon;
+      this.username = userMsg.username;
       if(this.role === 3){
         this.isAdmin = true
       }

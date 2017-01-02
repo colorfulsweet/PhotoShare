@@ -70,7 +70,7 @@
       let params = {
         "memberId" : memberId
       }
-      this.$http.get(url,params).then(function(res){
+      this.$http.get(url,{params}).then(function(res){
         var resData = JSON.parse(res.bodyText);
         if(resData.status) {
           vm.resData = resData.data;
@@ -99,7 +99,7 @@
           //当前用户是否赞过
           choice: choice
         }
-        this.$http.get(url,params).then(function(res){
+        this.$http.get(url,{params}).then(function(res){
           var resData = JSON.parse(res.bodyText);
           if(resData.status) {
             if(choice){

@@ -61,7 +61,7 @@
             memberId : localStorage.getItem('memberId'),
             sharedPhoto : urlArr
           }
-          this.$http.post(url,params).then(function(res){
+          this.$http.post(url,{params}).then(function(res){
             alert('发布成功');
             router.push('/index/fresh');
             this.$store.commit('isLoading', false);

@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <input class="box" v-model="searchValue" placeholder="搜索" type="text"/>
+    <input class="box" v-model="searchText" placeholder="搜索" type="text"/>
     <span class="icon iconfont icon-sousuo submit" @click="submit"></span>
   </div>
 </template>
@@ -11,13 +11,16 @@
   export default{
     data: function () {
       return {
-        searchValue: ''
+        searchText: null
       }
     },
     methods:{
       submit:function () {
-        let context = this
-        router.push('/search/sea?s='+context.searchValue)
+        if(!this.searchText) {
+          alert("请输入搜索内容!");
+          return false;
+        }
+        router.push('/search/sea?q='+this.searchText);
       }
     }
   }
