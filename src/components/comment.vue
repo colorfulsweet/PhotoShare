@@ -4,6 +4,7 @@
     <div class="content">
       <ul class="c-list clearfix">
         <li v-for="(v,k) in replyData">
+
           <div class="c-top clearfix">
             <img :src="v.fromMemberAvatar">
             <p class="name">{{v.fromMemberNickname}} 回复 {{v.toMemberNickname}}</p>
@@ -14,6 +15,7 @@
           <div class="c-bottom">
             <p>{{v.commentContent}}</p>
           </div>
+
         </li>
       </ul>
       <a @click="doComment" class="comment-btn btn-b">评 论</a>

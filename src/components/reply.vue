@@ -1,17 +1,18 @@
 <template>
   <div v-show="isComment" class="b-reply">
-    <input class="r-input" type="text" :placeholder="reply">
+    <input class="r-input" type="text" v-model="replyText" :placeholder="reply">
     <span @click="submit">回复</span>
   </div>
 </template>
 <script>
-  // import axios from 'axios'
   export default{
     data: function () {
-      return {}
+      return {
+        replyText : null
+      }
     },
     updated: function () {
-      document.querySelector('.r-input').value = ''
+      this.replyText = null;
     },
     computed: {
       isComment: function () {
@@ -28,47 +29,45 @@
     methods: {
 //      提交回复或评论
       submit: function (e) {
-        let vm = this
-        let val = e.target.parentNode.querySelector('input').value
-        let url = 'http://www.sherlochao.com:9091/photosharing/commentapi/comment'
-        let memberId = localStorage.getItem('memberId')
+        let val = this.replyText;
+        let url = this.$store.state.comm.apiUrl + 'comment/publish';
+        let memberId = localStorage.getItem('memberId');
 
         if(val.length > 100) {
-          alert('评论不能多于100字！')
-        }else{
-
-          let param;
-          if(this.$store.state.reply.name !== ''){
-            param = {
-              commentContent: val,
-              sharedId: this.$route.params.id,
-              commentFromMemberId: memberId,
-              commentToMemberId: this.$store.state.reply.commentId,
-              fromMemberNickname: JSON.parse(localStorage.getItem('userMsg')).memberName,
-              toMemberNickname: this.$store.state.reply.name,
-              toMemberAvatar :'http://g',
-              fromMemberAvatar: 'http://www.sherlochao.com:9091/filebase'+JSON.parse(localStorage.getItem('userMsg')).memberAvatar
-            }
-          }else{
-            param = {
-              commentContent: val,
-              sharedId: this.$route.params.id,
-              commentFromMemberId: memberId,
-              fromMemberNickname: JSON.parse(localStorage.getItem('userMsg')).memberName,
-              toMemberNickname: this.$store.state.reply.name,
-              toMemberAvatar :'http://g',
-              fromMemberAvatar: 'http://www.sherlochao.com:9091/filebase'+JSON.parse(localStorage.getItem('userMsg')).memberAvatar
-            }
-          }
-          vm.$store.commit('isLoading', true)
-          axios.get(url,{params:param} ).then(function (res) {
-            if(res.data.result === 1){
-              location.reload();
-            }
-          }).catch(function (error) {
-            console.log(error)
-          })
+          alert('评论不能多于100字！');
+          return false;
         }
+
+        let params;
+        // if(this.$store.state.reply.name !== ''){
+          params = {
+            content: val,
+            sharedId: this.$route.params.id,
+            memberId: memberId
+            // commentToMemberId: this.$store.state.reply.commentId,
+            // fromMemberNickname: JSON.parse(localStorage.getItem('userMsg')).memberName,
+            // toMemberNickname: this.$store.state.reply.name,
+            // fromMemberAvatar: this.$store.state.comm.fileUrl+JSON.parse(localStorage.getItem('userMsg')).memberAvatar
+          }
+        // }else{
+        //   param = {
+        //     commentContent: val,
+        //     sharedId: this.$route.params.id,
+        //     commentFromMemberId: memberId,
+        //     fromMemberNickname: JSON.parse(localStorage.getItem('userMsg')).memberName,
+        //     toMemberNickname: this.$store.state.reply.name,
+        //     fromMemberAvatar: this.$store.state.comm.fileUrl + JSON.parse(localStorage.getItem('userMsg')).memberAvatar
+        //   }
+        // }
+        this.$store.commit('isLoading', true);
+        this.$http.get(url,{params}).then(function(res){
+          let resData = JSON.parse(res.bodyText);
+          if(resData.status) {
+            location.reload();
+          }
+        }).catch(function(err){
+          console.error(err);
+        });
       }
     }
   }

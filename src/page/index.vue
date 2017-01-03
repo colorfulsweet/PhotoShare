@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <img src="static/images/03.jpg" alt="">
+    <img src="static/images/head2.jpg" alt="">
     <div class="center">
       <router-link to="/index/fresh" class="list" ><p>最新动态</p></router-link>
       <router-link to="/index/hot" class="list" ><p>热门话题</p></router-link>
