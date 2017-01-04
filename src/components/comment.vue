@@ -3,17 +3,20 @@
     <div class="title">评论区</div>
     <div class="content">
       <ul class="c-list clearfix">
-        <li v-for="(v,k) in replyData">
+        <li v-for="(comment,index) in comments">
 
           <div class="c-top clearfix">
-            <img :src="v.fromMemberAvatar">
-            <p class="name">{{v.fromMemberNickname}} 回复 {{v.toMemberNickname}}</p>
-            <time>{{v.commentCreateTime}}</time><span v-if="id==v.commentFromMemberId" class="icon iconfont icon-lajixiang delete" @click="del(v.commentId)"></span>
-            <a @click="doReply" :commentId="v.commentFromMemberId" :name="v.fromMemberNickname" class="reply"><span
-              class="iconfont icon icon-more2" :commentId="v.commentFromMemberId" :name="v.fromMemberNickname"></span>回复</a>
+            <img :src="imageUrl + comment.user.memberIcon">
+            <p class="name">{{comment.user.memberNickname}} <!-- 回复 {{v.toMemberNickname}} --></p>
+            <time>{{formatDate(comment.createTime)}}</time>
+            <span v-if="id==comment.user.id" class="icon iconfont icon-lajixiang delete" @click="del(comment.id,index)"></span>
+            <a @click="doReply" :commentId="comment.user.id" :name="comment.user.memberNickname" class="reply">
+              <span class="iconfont icon icon-more2" :commentId="comment.user.id" :name="comment.user.memberNickname"></span>
+              回复
+            </a>
           </div>
           <div class="c-bottom">
-            <p>{{v.commentContent}}</p>
+            <p>{{comment.content}}</p>
           </div>
 
         </li>
@@ -24,20 +27,33 @@
 </template>
 <script>
   // import axios from 'axios'
+  import router from "../router/router";
+  import moment from "moment";
 
   export default {
     data: function () {
       return {
-        id: localStorage.getItem('memberId')
+        id: localStorage.getItem('memberId'),
+        imageUrl : this.$store.state.comm.fileUrl+"image/",
+        baseUrl : this.$store.state.comm.apiUrl+"comment/"
       }
     },
     props: ['content'],
     computed: {
-      replyData: function () {
-        return this.$store.state.reply.comment
+      //评论
+      comments: function () {
+        return this.$store.state.reply.comment;
       }
     },
     methods: {
+      /**
+      * 日期时间格式化
+      * @param time 表示时间的整数(可以是字符串格式)
+      */
+      formatDate : function(time){
+        let date = new Date(parseInt(time));
+        return moment(date).format("LLL");
+      },
       doReply: function (event) {
         let p = event.target
         let name = p.getAttribute('name')
@@ -46,23 +62,31 @@
         this.$store.commit('reply', {name: name, commentId: id})
       },
       doComment: function () {
+        if(!localStorage.getItem("memberId")) {
+          router.push("/login");
+          return;
+        }
         this.$store.commit('reply', {name: '', commentId: ''})
       },
-      del: function (id) {
-        let baseUrl = this.$store.state.comm.apiUrl
-        let url,param
-        url = baseUrl + 'commentapi/delcomment'
-
-        param = {
+      /**
+      * 删除评论
+      * @param id 评论的ID
+      * @param index 评论的索引(从0开始)
+      */
+      del: function (id,index) {
+        let url = this.baseUrl + "/del";
+        let params = {
           commentId: id
-        }
-        axios.get(url,{params:param} ).then(function (res) {
-          if(res.data.result === 1){
-            location.reload();
+        };
+        this.$http.get(url,{params}).then(function (res) {
+          var resData = JSON.parse(res.bodyText);
+          if(resData.status){
+            this.comments.splice(index,1);
+            // location.reload();
           }
         }).catch(function (error) {
           console.log(error)
-        })
+        });
       }
     },
     watch: {}

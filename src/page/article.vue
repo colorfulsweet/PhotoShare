@@ -7,7 +7,7 @@
           <p>{{resData.memberNickname}}
             <span v-bind:class="{ hasZan : resData.hasStar }" class="Userstar" @click="star"><span class="icon iconfont icon-jushoucang"></span> <span> 收藏</span></span>
           </p>
-          <time>{{resData.sharedCreatetime}}</time>
+          <time>{{formatDate(resData.sharedCreatetime)}}</time>
         </div>
       </div>
       <div class="imgbox">
@@ -37,6 +37,7 @@
 <script>
   import Comment from '../components/comment.vue'
   import Reply from '../components/reply'
+  import moment from "moment";
 
   export default {
     name: "article",
@@ -74,8 +75,8 @@
         var resData = JSON.parse(res.bodyText);
         if(resData.status) {
           vm.resData = resData.data;
-          vm.$store.state.reply.comment = vm.resData.comments
-          vm.$store.commit('isLoading', false)
+          vm.$store.state.reply.comment = vm.resData.comments;//评论内容
+          vm.$store.commit('isLoading', false);
         }
       }).catch(function(err){
         console.error(err);
@@ -89,6 +90,14 @@
     methods: {
       handleSubmit: function (val) {
         this.content = val
+      },
+      /**
+      * 日期时间格式化
+      * @param time 表示时间的整数(可以是字符串格式)
+      */
+      formatDate : function(time){
+        let date = new Date(parseInt(time));
+        return moment(date).format("LLL");
       },
       zan:function () {
         let obj = this.resData;

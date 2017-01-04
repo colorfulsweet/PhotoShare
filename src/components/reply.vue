@@ -11,9 +11,9 @@
         replyText : null
       }
     },
-    updated: function () {
-      this.replyText = null;
-    },
+    // updated: function () {
+    //   this.replyText = null;
+    // },
     computed: {
       isComment: function () {
         return this.$store.state.reply.isComment
@@ -61,6 +61,7 @@
         // }
         this.$store.commit('isLoading', true);
         this.$http.get(url,{params}).then(function(res){
+          debugger;
           let resData = JSON.parse(res.bodyText);
           if(resData.status) {
             location.reload();

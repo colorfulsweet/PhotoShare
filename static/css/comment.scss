@@ -37,6 +37,11 @@
         padding-right: px2rem(10);
       }
     }
+    .delete{
+      position: absolute;
+      top: px2rem(50);
+      right: px2rem(110);
+    }
     .name{
       font-size: px2rem(30);
       line-height: px2rem(40);
@@ -71,14 +76,4 @@
     margin: px2rem(30) auto 0;
   }
 
-}
-.cc{
-  background: url("/src/images/icon-1.png") no-repeat;
-  width:px2rem(44);
-  height:px2rem(44);
-}
-.delete{
-  position: relative;
-  top: 15px;
-  left: 145px;
 }

@@ -8,7 +8,7 @@
           </a>
           <div class="name">
             <p>{{value.user.memberNickname}}</p>
-            <p class="createtime"  v-if="value.sharedCreatetime">{{value.sharedCreatetime}}</p>
+            <p class="createtime"  v-if="value.sharedCreatetime">{{formatDate(value.sharedCreatetime)}}</p>
           </div>
           <router-link :to="{  name: 'article', params: { id: value.id }}" class="btn-d btn-s"  v-if="value.photos">详情</router-link>
         </div>
@@ -30,6 +30,8 @@
   </div>
 </template>
 <script>
+  import moment from "moment";
+
   export default{
     name: "list",
     data: function () {
@@ -59,6 +61,14 @@
       }
     },
     methods: {
+      /**
+      * 日期时间格式化
+      * @param time 表示时间的整数(可以是字符串格式)
+      */
+      formatDate : function(time){
+        let date = new Date(parseInt(time));
+        return moment(date).format("LLL");
+      },
       //点赞
       zan:function (obj) {
         let url = this.baseUrl + 'thumbsUp/'+obj.id;

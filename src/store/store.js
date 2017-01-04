@@ -46,7 +46,7 @@ const store = new Vuex.Store({
       }
     },
     /*
-     * loading的显示
+     * loading的显示/隐藏
      * */
     isLoading: (state, status) => {
       state.comm.loading = status
@@ -59,9 +59,9 @@ const store = new Vuex.Store({
       Object.assign(state.comm.indexConf, data)
     },
     isLogin: (state,data) => {
-      localStorage.setItem('memberId',data.memberId);
-      localStorage.setItem('userMsg',JSON.stringify(data));
-      state.comm.login.memberId = data.memberId;
+      localStorage.setItem('memberId',data.id);//登陆用户ID
+      localStorage.setItem('userMsg',JSON.stringify(data));//登陆用户其他信息
+      state.comm.login.memberId = data.id;
       state.comm.login.userData = data;
     },
     logout: (state,data) => {

@@ -51,15 +51,16 @@
         let params = {
           username : this.name,
           password : this.pwd
-        }
+        };
         this.$http.post(url,{params}).then(function(res){
           var resData = JSON.parse(res.bodyText);
           if(resData.status) {
-            vm.$store.commit('isLogin', resData.data)
-            alert('登陆成功！')
-            router.push('index/fresh')
+            vm.$store.commit('isLogin', resData.data);
+            alert('登陆成功！');
+            //登陆可能是由不同的位置触发的, 所以登陆成功以后直接回退到之前所在页面
+            router.go(-1);
           } else {
-              alert('用户名/密码错误')
+            alert('用户名/密码错误');
           }
         }).catch(function(err){
           console.error(err);
