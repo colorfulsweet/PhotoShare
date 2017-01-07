@@ -26,7 +26,6 @@
   </div>
 </template>
 <script>
-  // import axios from 'axios'
   import router from "../router/router";
   import moment from "moment";
 
@@ -66,7 +65,7 @@
           router.push("/login");
           return;
         }
-        this.$store.commit('reply', {name: '', commentId: ''})
+        this.$store.commit('reply', {name: '', commentId: ''});
       },
       /**
       * 删除评论
@@ -85,7 +84,7 @@
             // location.reload();
           }
         }).catch(function (error) {
-          console.log(error)
+          console.log(error);
         });
       }
     },

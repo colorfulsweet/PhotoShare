@@ -7,7 +7,7 @@
             {{value.memberMobile}}  ({{value.memberNickname}})
             <span class="sex"> {{value.memberRole==2?'女':'男'}} </span>
           </span>
-          <img :src="baseUrl + value.memberAvatar">
+          <img :src="fileUrl + value.memberAvatar">
         </router-link>
       </li>
       <li>
@@ -29,7 +29,8 @@
     data: function () {
       return {
         doList:'',
-        baseUrl: 'http://www.sherlochao.com:9091/filebase'
+        fileUrl : this.$store.state.comm.fileUrl,
+        baseUrl : this.$store.state.comm.apiUrl
       }
     },
     created: function () {
@@ -44,8 +45,8 @@
     },
     methods:{
       fetchData:function () {
-        let vm = this
-        let url = 'http://www.sherlochao.com:9091/photosharing/administratirapi/listMember'
+        let vm = this;
+        let url = this.baseUrl + 'admin/listMember';
         axios.get(url).then(function (res) {
           vm.doList = res.data.data
         }).catch(function (error) {
@@ -53,7 +54,7 @@
         })
       },
       forbit:function (id) {
-        let url = 'http://www.sherlochao.com:9091/photosharing/administratirapi/authorityMember'
+        let url = this.baseUrl + 'admin/authorityMember'
         axios.get(url,{
           params: {
             memberId: id,
@@ -68,7 +69,7 @@
         })
       },
       permit:function (id) {
-        let url = 'http://www.sherlochao.com:9091/photosharing/administratirapi/authorityMember'
+        let url = this.baseUrl + 'admin/authorityMember'
         axios.get(url,{
           params: {
             memberId: id,
