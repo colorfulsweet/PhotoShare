@@ -2,7 +2,7 @@
   <div>
     <div class="com-article">
       <div class="user">
-        <img :src="imageUrl + resData.memberIcon" alt=""/>
+        <img :src="imageUrl + icon" alt=""/>
         <div class="name">
           <p>{{resData.memberNickname}}
             <span v-bind:class="{ hasZan : resData.hasStar }" class="Userstar" @click="star"><span class="icon iconfont icon-jushoucang"></span> <span> 收藏</span></span>
@@ -45,6 +45,7 @@
       return {
         content: null,
         resData: {},
+        icon : null,
         baseUrl: this.$store.state.comm.apiUrl+"share/",
         imageUrl: this.$store.state.comm.fileUrl+"image/",
         memberId: localStorage.getItem('memberId')
@@ -75,6 +76,7 @@
         var resData = JSON.parse(res.bodyText);
         if(resData.status) {
           vm.resData = resData.data;
+          vm.icon = resData.data.user.memberIcon;
           vm.$store.state.reply.comment = vm.resData.comments;//评论内容
           vm.$store.commit('isLoading', false);
         }

@@ -1,34 +1,17 @@
 <template>
   <div id="loadingToast" class="loading weui_loading_toast">
-    <div class="weui_mask_transparent"></div>
-    <div class="weui_toast">
-      <div class="weui_loading">
-        <div class="weui_loading_leaf weui_loading_leaf_0"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_1"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_2"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_3"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_4"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_5"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_6"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_7"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_8"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_9"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_10"></div>
-        <div class="weui_loading_leaf weui_loading_leaf_11"></div>
-      </div>
-      <p class="weui_toast_content">{{tip}}</p>
-    </div>
+    <div class="loader loader-default is-active" :data-text="tip"></div>
   </div>
 </template>
 <script>
   export default {
     data: function () {
       return {
-        tip : "数据加载中"
+        tip : "正在加载..."
       }
     }
   }
 </script>
 <style lang="scss">
-  @import "../../static/css/loading.scss";
+  @import "../../static/css/loader-default.css";
 </style>

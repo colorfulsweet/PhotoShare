@@ -20,8 +20,8 @@ const store = new Vuex.Store({
         memberId: '',
         userData: ''
       },
-      apiUrl: 'http://192.168.0.101:8080/photo_service/',
-      fileUrl: 'http://192.168.0.101:8080/photo_service/filebase/',
+      apiUrl: 'http://127.0.0.1:8080/photo_service/',
+      fileUrl: 'http://127.0.0.1:8080/photo_service/filebase/',
       indexConf: {
         isFooter: true, // 是否显示底部
         isSearch: true, // 是否显示搜索
