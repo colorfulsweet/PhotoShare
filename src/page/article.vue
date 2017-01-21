@@ -2,7 +2,7 @@
   <div>
     <div class="com-article">
       <div class="user">
-        <img :src="imageUrl + icon" alt=""/>
+        <img :src="iconUrl" alt=""/>
         <div class="name">
           <p>{{resData.memberNickname}}
             <span v-bind:class="{ hasZan : resData.hasStar }" class="Userstar" @click="star"><span class="icon iconfont icon-jushoucang"></span> <span> 收藏</span></span>
@@ -45,7 +45,7 @@
       return {
         content: null,
         resData: {},
-        icon : null,
+        iconUrl : "",
         baseUrl: this.$store.state.comm.apiUrl+"share/",
         imageUrl: this.$store.state.comm.fileUrl+"image/",
         memberId: localStorage.getItem('memberId')
@@ -73,10 +73,11 @@
         "memberId" : memberId
       }
       this.$http.get(url,{params}).then(function(res){
-        var resData = JSON.parse(res.bodyText);
+        // var resData = JSON.parse(res.bodyText);
+        var resData = res.data;
         if(resData.status) {
           vm.resData = resData.data;
-          vm.icon = resData.data.user.memberIcon;
+          vm.iconUrl = vm.imageUrl + resData.data.user.memberIcon;
           vm.$store.state.reply.comment = vm.resData.comments;//评论内容
           vm.$store.commit('isLoading', false);
         }
@@ -111,7 +112,8 @@
           choice: choice
         }
         this.$http.get(url,{params}).then(function(res){
-          var resData = JSON.parse(res.bodyText);
+          // var resData = JSON.parse(res.bodyText);
+          var resData = res.data;
           if(resData.status) {
             if(choice){
               //已赞过则是取消赞 数量-1

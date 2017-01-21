@@ -82,7 +82,8 @@
         let vm = this;
         let url = vm.$store.state.comm.apiUrl + 'user/logout';
         this.$http.get(url).then(function(res){
-          var resData = JSON.parse(res.bodyText);
+          // var resData = JSON.parse(res.bodyText);
+          var resData = res.data;
           if(resData.status){
             vm.$store.commit('logout')
             router.push('index/hot')

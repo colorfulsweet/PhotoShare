@@ -61,7 +61,8 @@
         // }
         this.$store.commit('isLoading', true);
         this.$http.get(url,{params}).then(function(res){
-          let resData = JSON.parse(res.bodyText);
+          // var resData = JSON.parse(res.bodyText);
+          var resData = res.data;
           if(resData.status) {
             location.reload();
           }

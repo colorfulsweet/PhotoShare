@@ -1,12 +1,12 @@
 #vue
 
 ### 运行方式
-1. 在根目录下 npm install  下载依赖
+1. 在根目录下 npm install 下载依赖
 2. npm run dev
 
-## 整体项目采用  vue +  vue-router +  vuex （传说中的vue 全家桶 ），构建工具使用尤大大推出的vue-cli
+## 整体项目采用  vue +  vue-router +  vuex ，构建工具使用尤大大推出的vue-cli
 
-## vue-cli构建工具必知
+## vue-cli构建工具
 
 我选用的vue-cli 是基于webpack的版本
 
@@ -52,8 +52,8 @@ npm run dev    //npm run xxx 是执行配置在package.json中的脚本，e.g: �
 ```
 module.exports = {
  build:{
-     assetsSubDirectory: 'static',  //修改这里成你项目放置静态文件的目录
-    assetsPublicPath: './',     //修改这里成你项目放置静态文件的目录
+     assetsSubDirectory: 'static',  //修改成项目放置静态文件的目录
+    assetsPublicPath: './',     //修改成项目放置静态文件的目录
 }
 }
 ```
@@ -126,17 +126,15 @@ npm install sass-loader --save-dev
 //在根目录html里面
 ```
 
- 挂载到#app ，假如new vue 的时候，有显示的 el 属性
+挂载到#app
 ```
-let data = {
-  el:'#app',
+new Vue({
+  el : "#app",
+  components : {App},
   router,
   store
-}
+});
 ```
-则无须手动挂载到选择符#app匹配的元素上
-
-
 
 3. app.vue
 
@@ -174,12 +172,12 @@ v-show 渲染页面结构后，通过 "display:none" 控制元素状态
         {path: '/home', name: 'home', component: Home},
         {path: '/HomeUserInfo/:uid', name: 'homeUserInfo', component: HomeUserInfo},
         {path: '/article/:id', name: 'article', component: Article},
-       {path: '/addmsg', name: 'addMsg', component: AddMsg},
-       {path: '/search/:types', name: 'searchresult', component: SearchResult},
-       {path: '/login', name: 'login', component: Login},
-       {path: '/register', name: 'register', component: Register},
-       {path: '/modif', name: 'Modifi', component: Modifi},
-       {path: '/admin', name: 'Admin', component: Admin}
+        {path: '/addmsg', name: 'addMsg', component: AddMsg},
+        {path: '/search/:types', name: 'searchresult', component: SearchResult},
+        {path: '/login', name: 'login', component: Login},
+        {path: '/register', name: 'register', component: Register},
+        {path: '/modif', name: 'Modifi', component: Modifi},
+        {path: '/admin', name: 'Admin', component: Admin}
      ]
    }
  ]
@@ -196,8 +194,7 @@ v-show 渲染页面结构后，通过 "display:none" 控制元素状态
 一个组件实质上是一个拥有预定义选项的一个 Vue 实例
 在header组件内部允许外部使用，需要导出属性，有2种导出方法
 
-- 默认导出（不用命名）
-
+- 默认导出
 ```
  export default {
    data () {
@@ -367,20 +364,22 @@ template代码
 
 2. 判断是否登陆
 
-进入个人信息页面，由于需要判断是否已登陆，此时由 router 进行一个拦截，具体代码如下
-
+进入个人信息页面，由于需要判断是否已登陆，此时由 router 进行一个拦截
 ```
- router.beforeEach(function (to,from,next) {
-   var userMsg = localStorage.getItem('userMsg')
-   if(to.path === '/home'){
-     if(!userMsg){
-       next({ path: '/login' })
-     }
-   }
-   next()
- })
+//....
+{path: '/home', name: 'home', component: Home,
+  beforeEnter: (to,from,next)=>{
+    //登陆验证
+    if(localStorage.getItem('userMsg')){
+      next()
+    } else {
+      next({ path: '/login' })
+    }
+}},
+//....
 ```
-
+这里使用指定路由独享的导航钩子
+(或者也可以使用全局导航钩子, 对路由的path进行判断)
 
 3. 常用api
 

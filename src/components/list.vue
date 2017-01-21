@@ -79,7 +79,8 @@
           choice: choice
         }
         this.$http.get(url,{params}).then(function(res){
-          var resData = JSON.parse(res.bodyText);
+          // var resData = JSON.parse(res.bodyText);
+          var resData = res.data;
           if(resData.status) {
             if(choice){
               //已赞过则是取消赞 数量-1

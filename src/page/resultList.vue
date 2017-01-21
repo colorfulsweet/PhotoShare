@@ -7,7 +7,6 @@
 
 <script>
   import list from '../components/list.vue'
-  // import axios from 'axios'
 
   export default{
     name : "search",
@@ -101,7 +100,8 @@
           params[name] = this.query[name];
         }
         this.$http.get(url, {params}).then(function(res){
-          var resData = JSON.parse(res.bodyText);
+          // var resData = JSON.parse(res.bodyText);
+          var resData = res.data;
           vm.$store.commit('isLoading', false);
           vm.empty = !resData.data.length;
           vm.resData = resData.data;

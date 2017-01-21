@@ -78,7 +78,8 @@
           commentId: id
         };
         this.$http.get(url,{params}).then(function (res) {
-          var resData = JSON.parse(res.bodyText);
+          // var resData = JSON.parse(res.bodyText);
+          var resData = res.data;
           if(resData.status){
             this.comments.splice(index,1);
             // location.reload();

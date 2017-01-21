@@ -52,8 +52,8 @@
           username : this.name,
           password : this.pwd
         };
-        this.$http.post(url,{params}).then(function(res){
-          var resData = JSON.parse(res.bodyText);
+        this.$http.post(url,params).then(function(res){
+          var resData = res.data;
           if(resData.status) {
             vm.$store.commit('isLogin', resData.data);
             alert('登陆成功！');
