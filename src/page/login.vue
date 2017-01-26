@@ -4,7 +4,7 @@
       <ul class="formarea">
         <li>
           <label class="lit">账号：</label>
-          <input type="text" placeholder="手机号码" class="textbox" required v-model="name"/>
+          <input type="text" placeholder="用户名/手机号" class="textbox" required v-model="name"/>
         </li>
         <li>
           <label class="lit">密码：</label>
@@ -13,7 +13,6 @@
         <li class="liLink lg_liLink">
           <span><label><input type="checkbox"/>记住密码</label></span>
           <span><a href="#/register">新用户注册</a></span>
-          <span><a href="#/find_pwd">忘记密码?</a></span>
         </li>
         <li>
           <input type="button" @click="loginAction" value="立即登陆" class="button"/>

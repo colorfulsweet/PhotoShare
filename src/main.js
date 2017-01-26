@@ -13,6 +13,9 @@ Vue.use(VueResource);
 // Vue.config.debug = true
 // window.log = console.log
 
+// Vue.http.get = Vue.http.jsonp;
+// Vue.http.post = Vue.http.jsonp;
+
 //如果Web服务器无法处理编码为application/json的请求
 //启用该选项后，请求会以application/x-www-form-urlencoded作为MIME type，就像普通的HTML表单一样。
 Vue.http.options.emulateJSON = true;

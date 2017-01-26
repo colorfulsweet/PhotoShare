@@ -12,7 +12,7 @@
         </li>
         <li>
           <label class="lit">确认密码：</label>
-          <input type="password" placeholder="确认密码" class="textbox" required @blur="pwdCheck" v-model="pwdAgain"/>
+          <input type="password" placeholder="确认密码" class="textbox" required @keyup="pwdCheck" v-model="pwdAgain"/>
         </li>
         <li class="liLink">
           <span v-if="showTip" style="color:red;">两次输入的密码不一致</span>
@@ -41,8 +41,7 @@
     },
     watch : {
       phone : function(newVal, oldVal){
-        console.log(11);
-        if(!/^[0-9]+$/.test(newVal)) {
+        if(!/^[0-9]+$/.test(newVal) && newVal) {
           this.phone = oldVal;
         }
       },
@@ -64,10 +63,13 @@
     },
     methods: {
       register: function () {
-        let url = this.$store.state.comm.apiUrl + 'memberapi/register'
-        let params = 'name=' + this.phone + '&password=' + this.pwd
-        this.post(url,{params},function (res) {
-          var resData = JSON.parse(res.bodyText);
+        let url = this.$store.state.comm.apiUrl + 'user/register'
+        let params = {
+          tel : this.phone,
+          password : this.pwd
+        };
+        this.$http.post(url,params,function (res) {
+          var resData = res.data;
           if(resData.result){
             alert('注册成功，请登陆！');
             router.push('login');

@@ -61,6 +61,8 @@
             memberId : localStorage.getItem('memberId'),
             sharedPhoto : urlArr
           }
+          //第三个参数 {headers:{"Content-Type":"multipart/form-data"}}
+          //未生效
           this.$http.post(url,params).then(function(res){
             alert('发布成功');
             router.push('/index/fresh');
